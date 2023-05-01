@@ -1,0 +1,12 @@
+.modalx{
+    margin: auto;  /* MUY IMPORTANTE PARA CENTRARLO */
+    border: none; /* QUITARE EL BORDE POR DEFECTO */
+    background: transparent; /* PARA QUE NO INTERFIERA CON EL CONTENEDOR */
+    background: rgba(0, 0, 0, 0.74);
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .modalx::backdrop { /* PARA CAMBIAR EL FONDO DE DETRAS DE UN MODAL, EL OSCURECIMIENTO DE POR DEFECTO */
+    background: rgba(0, 0, 0, 0.8);
+  }

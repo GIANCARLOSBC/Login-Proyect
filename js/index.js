@@ -24,8 +24,8 @@ window.addEventListener('DOMContentLoaded', async () => {
           <td>${tarea.run}</td>
           <td>${tarea.email}</td>
           <td>
-            <button class=' btn btn-info btn-edit' data-id="${doc.id}">Editar</button>
-            <button class=' btn btn-danger btn-delete' data-id="${doc.id}">Eliminar</button>
+            <button class=' btn btn-success btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
+            <button class=' btn btn-danger btn-delete' data-id="${doc.id}"><i class="fa-solid fa-trash"></i></button>
           </td>
           </td>
         </tr>`
@@ -45,6 +45,17 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (confirmDelete) {
         try {
           await eliminarTarea(dataset.id)
+            Toastify({
+              text: 'Borrado exitosamente',
+              duration: 3000,
+              close: true,
+              gravity: 'bottom',
+              position: 'right',
+              backgroundColor: 'rgb(102, 23, 29)',
+              stopOnFocus: true,
+              className: 'toastify-success'
+            }).showToast();
+          
         } catch (error) {
           throw new Error(error)
       } }
@@ -67,8 +78,12 @@ window.addEventListener('DOMContentLoaded', async () => {
           editStatus = true
           id = doc.id
           taskForm['btn-task-form'].innerText = 'Actualizar'
+  
+
           abrirModal()
+          
         } catch (error) {
+          
           throw new Error(error)
         }
       })
@@ -90,12 +105,33 @@ taskForm.addEventListener('submit', async (e) => {
   try {
     if (!editStatus) {
       Object.keys(newData).length > 0 && (await guardarTarea(newData))
+      Toastify({
+        text: 'Datos Guardados',
+        duration: 3000,
+        close: true,
+        gravity: 'bottom',
+        position: 'right',
+        backgroundColor: 'green',
+        stopOnFocus: true,
+        className: 'toastify-success'
+      }).showToast();
     } else {
       await actualizarTarea(id, newData)
+      Toastify({
+        text: 'Tarea actualizada correctamente',
+        duration: 3000,
+        close: true,
+        gravity: 'bottom',
+        position: 'right',
+        backgroundColor: 'green',
+        stopOnFocus: true,
+        className: 'toastify-success'
+      }).showToast();
 
       editStatus = false
       id = ''
       taskForm['btn-task-form'].innerText = 'Guardar'
+      
     }
 
     newData = {}

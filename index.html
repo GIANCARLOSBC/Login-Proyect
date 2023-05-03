@@ -11,20 +11,20 @@
   <title>Login Restaurante</title>
 </head>
 <body>
-        <section class="fanimado">
+    <section class="fanimado">
         <div class="form-box content" >
             <div class="form-value">
                 <form id="login-form">
                     <h2>Login</h2>
                     <div class="inputbox">
                         <ion-icon name="mail-outline"></ion-icon>
-                        <input type="email" id="login-email" required autofocus autocomplete="off">
-                        <label for="">Email</label>
+                        <input type="email" id="login-email" required autofocus  maxlength="50">
+                        <label for="login-email">Email</label>
                     </div>
                     <div class="inputbox">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input type="password" id="login-password" class="passw" required autocomplete="off">
-                        <label for="password">Password</label>
+                        <img src="img/ojito.png" id="eye" class="icon">
+                        <input type="password" id="login-password" class="passw" required  maxlength="20">
+                        <label for="login-password">Password</label>
                     </div>
                     <div class="forget">
                         <label for=""><input type="checkbox">Acuérdate de mí  <a href="#">Contraseña olvidada</a></label>
@@ -34,10 +34,28 @@
                     <button type="submit" class="btn btn--1 " >Login</button>
                     </div>
 
+                    <!-- <div class="space">
+                    <button class="google-button" id="googleLogin" type="button">
+                        <div class="content-wrapper">
+                        <div class="logo-wrapper">
+                            <img src="https://developers.google.com/identity/images/g-logo.png">
+                        </div>
+                        <span class="text-container">
+                            <span>Continuar con Google</span>
+                        </span>
+                        </div>
+                    </button>
+                    </div>   -->
+                    
+
+                   
+                    
+                    
+                    
                 </form>
             </div>
         </div>
-        </section>
+    </section>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -45,5 +63,6 @@
     <script src="script.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./main.js" type="module"></script>
+    <script src="code.js"></script>
 </body>
 </html>

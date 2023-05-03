@@ -3,11 +3,15 @@ import { abrirModal, cerrarModal } from './modal/modal.js'
 const taskForm = document.getElementById('task-form')
 const tasksContainer = document.getElementById('tasks-container')
 
+
+
+
 let editStatus = false
 let id = ''
 
 window.addEventListener('DOMContentLoaded', async () => {
   // CUANDO SE TRAEN LAS TAREAS
+  
   onGetTasks((querySnapshot) => { // querySnapshot contiene todas las tareasguardadas
     tasksContainer.innerHTML = ''
 
@@ -15,26 +19,33 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     querySnapshot.forEach((doc) => {
       const tarea = doc.data()
+      
+
       tasksContainer.innerHTML += `
         <tr>
           <td>${tarea.nombre}</td>
           <td>${tarea.apellidop}</td>
           <td>${tarea.apellidom}</td>
           <td>${tarea.telefono}</td>
-          <td>${tarea.run}</td>
           <td>${tarea.email}</td>
+          <td>${tarea.run}</td>
           <td>
-            <button class=' btn btn-success btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
+            <button class=' btn btn-warning btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
             <button class=' btn btn-danger btn-delete' data-id="${doc.id}"><i class="fa-solid fa-trash"></i></button>
-          </td>
+            
+
+
+    
           </td>
         </tr>`
 
         total++;
         
+        
     })
 
     document.getElementById('total-tasks').innerText = total.toString()
+    
 
     // CLICK EN ELIMINAR TAREA
     const btnsDelete = tasksContainer.querySelectorAll('.btn-delete')
@@ -45,16 +56,20 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (confirmDelete) {
         try {
           await eliminarTarea(dataset.id)
+          setTimeout(() => {
             Toastify({
               text: 'Borrado exitosamente',
               duration: 3000,
               close: true,
               gravity: 'bottom',
               position: 'right',
-              backgroundColor: 'rgb(102, 23, 29)',
+              style: {
+                background: "rgb(102, 23, 29)",
+              },
               stopOnFocus: true,
               className: 'toastify-success'
             }).showToast();
+          }, 2000); // delay of 2 seconds
           
         } catch (error) {
           throw new Error(error)
@@ -64,6 +79,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // CLICK EN EDITAR TAREA
     const btnsEdit = tasksContainer.querySelectorAll('.btn-edit')
+
 
     btnsEdit.forEach((btn) => {
       btn.addEventListener('click', async (e) => {
@@ -78,13 +94,10 @@ window.addEventListener('DOMContentLoaded', async () => {
           editStatus = true
           id = doc.id
           taskForm['btn-task-form'].innerText = 'Actualizar'
-  
-
           abrirModal()
-          
         } catch (error) {
-          
-          throw new Error(error)
+          throw new
+          Error(error)
         }
       })
     })
@@ -111,7 +124,9 @@ taskForm.addEventListener('submit', async (e) => {
         close: true,
         gravity: 'bottom',
         position: 'right',
-        backgroundColor: 'green',
+        style: {
+          background: "green",
+        },
         stopOnFocus: true,
         className: 'toastify-success'
       }).showToast();
@@ -123,7 +138,9 @@ taskForm.addEventListener('submit', async (e) => {
         close: true,
         gravity: 'bottom',
         position: 'right',
-        backgroundColor: 'green',
+        style: {
+          background: "green",
+        },
         stopOnFocus: true,
         className: 'toastify-success'
       }).showToast();
@@ -176,6 +193,18 @@ searchInput.addEventListener('input', () => {
     }
   });
 });
+
+
+  const query = searchInput.value.toLowerCase();
+
+  const rows = tasksContainer.querySelectorAll('tr');
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const shouldHide = !text.includes(query);
+    row.style.display = shouldHide ? 'none' : 'table-row';
+  });
+
 
 
 

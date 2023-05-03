@@ -9,6 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+
+
+            
 
     <title>Restaurante</title>
 
@@ -25,8 +31,7 @@
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/modal.css">
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 
 </head>
 
@@ -207,7 +212,11 @@
                         <button id="btn-agregar-nuevo" type="button" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm ">
                             <span class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm"><i
                                 class="fas fa-sm text-white-50"></i>Registrar Empleados</span>
+
                         </button>
+
+                        
+
                     </div>
 
             
@@ -220,12 +229,16 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+                            
+                            <button id="download-excel-btn" class="btn btn-success" ><i class="fa-solid fa-file-excel"></i></button>
+                            <button onclick="printTable()" class="btn btn-info"><i class="fa-solid fa-print"></i></button>
+
                         </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                             
-                                <table class="order-table table-bordered table" width="100%" cellspacing="0">
+                                <table class="order-table table-bordered table" id="example" width="100%"cellspacing="0">
                                     <thead>
                                         <tr>
                                           <th>Nombre</th>
@@ -238,28 +251,8 @@
                                         </tr>
                                       </thead>
                               
-                                      <tbody id="tasks-container">
-                                        <!-- <tr>
-                                          <th>1</th>
-                                          <td>Abram</td>
-                                          <td>Abram</td>
-                                          <td>Abram</td>
-                                          <td>Abram</td>
-                                          <td>Abram</td>
-                                          <td>
-                                            <button class="button is-warning">
-                              
-                                              <i class="fa-solid fa-paintbrush"></i>
-                              
-                                            </button>
-                                            <button class="button is-danger">
-                              
-                                              <i class="fa-solid fa-trash"></i>
-                              
-                                            </button>
-                                          </td>
-                              
-                                        </tr> -->
+                                      <tbody id="tasks-container" >
+                                        
                                       </tbody>
                                 </table>
                             </div>
@@ -280,34 +273,34 @@
                         <form id="task-form">
                           <label for="nombre"><b>Nombre: </b></label>
                           <input name="nombre" type="text" id="task-nombre" class="form-control mb-3"
-                            placeholder="Nombre" autofocus required/>
+                            placeholder="Nombre"  maxlength="11" required/>
                 
                           <label for="apellidop"><b>Apellido Paterno: </b></label>
                           <input name="apellidop" type="text" id="task-apellidop" class="form-control mb-3" 
-                            placeholder="Apellido Paterno" required/>
+                            placeholder="Apellido Paterno" maxlength="13" required/>
                 
                           <label for="apellidom"><b>Apellido Materno:</b></label>
                           <input name="apellidom" type="text" id="task-apellidom" class="form-control mb-3"
-                            placeholder="Apellido Materno" required />
+                            placeholder="Apellido Materno" maxlength="13" required />
                 
                           <label for="telefono"><b>Teléfono: </b></label>
                           <input name="telefono" type="tel" id="task-telefono" class="form-control mb-3"
-                            placeholder="Teléfono" required />
+                            placeholder="Teléfono" maxlength="15" required />
 
 
                           
                           <label for="email"><b>Email </b></label>
 
                           <input name="email" type="email" id="task-email" class="form-control mb-3"
-                                placeholder="Email"  required/>
+                                placeholder="Email" maxlength="30"  required/>
                 
                           <label for="run"><b>Rut: </b></label>
                           <input name="run" type="text" id="task-run" class="form-control mb-3"
-                            placeholder="Rut" required/>
+                            placeholder="Rut" maxlength="11" required/>
 
                 
                           <button class="btn btn-success " id="btn-task-form">Guardar</button>
-                          <button class="btn btn-danger" id="btn-task-exit">Salir</button>
+                          <button  class="btn btn-danger" id="btn-task-exit">Salir</button>
                         </form>
                       </div>
                   </dialog>
@@ -330,12 +323,8 @@
         <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -363,24 +352,121 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
+    <!--querys-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
+    <!-- BOOSTRAP ADMIN JS-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
+    <!-- DATABASE CSS-->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
+    <!-- DATABASE -->
     <script src="js/demo/datatables-demo.js"></script>
     
-    <!-- Page level custom scripts -->
+    <!-- PDF scripts -->
 
-    <script src="js/jspdf.debug.js"></script>
-    <script src="js/html2canvas.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script> 
+
+    
+    <script>
+        // Seleccionar el botón de descarga
+        const downloadExcelBtn = document.querySelector('#download-excel-btn');
+    
+        // Agregar un controlador de eventos para el botón de descarga
+        downloadExcelBtn.addEventListener('click', () => {
+        // Obtener los datos de la tabla
+        const table = document.querySelector('#example');
+        const tableData = [];
+        const headers = [];
+        const rows = table.rows;
+    
+        // Obtener los encabezados de la tabla
+        for (let i = 0; i < table.rows[0].cells.length; i++) {
+        const header = table.rows[0].cells[i].innerHTML.toLowerCase();
+
+        if (header === 'nombre' || header === 'apellido paterno' || header === 'apellido materno' || header === 'teléfono' || header === 'email' || header === 'run') {
+            headers.push(header);
+        }
+        }
+
+        // Obtener los datos de la tabla
+        for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const rowData = {};
+
+        for (let j = 0; j < row.cells.length; j++) {
+            const header = headers[j];
+            if (header) {
+            rowData[header] = row.cells[j].innerHTML;
+            }
+        }
+
+        tableData.push(rowData);  
+}
+    
+        // Crear un objeto de hoja de cálculo de Excel
+        const worksheet = XLSX.utils.json_to_sheet(tableData);
+    
+        // Crear un libro de Excel y agregar la hoja de cálculo
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Usuarios');
+    
+        // Descargar el archivo Excel
+        XLSX.writeFile(workbook, 'datos.xlsx');
+        });
+
+    </script>
+
+
+    <script>
+        
+        function printTable() {
+            // Eliminar la columna "Opciones" del encabezado de la tabla
+            var table = document.getElementById("example");
+            var optionsHeader = table.rows[0].cells[table.rows[0].cells.length - 1];
+            optionsHeader.parentNode.removeChild(optionsHeader);
+
+            // Eliminar la columna "Opciones" de cada fila del cuerpo de la tabla
+            var rows = table.rows;
+            for (var i = 0; i < rows.length; i++) {
+                var optionsCell = rows[i].cells[rows[i].cells.length - 1];
+                optionsCell.parentNode.removeChild(optionsCell);
+            }
+
+            // Imprimir la tabla
+            var printContents = document.getElementById("example").outerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+
+            document.body.innerHTML = originalContents;
+
+            // Restaurar la tabla original
+            var headerRow = table.rows[0];
+            var optionsHeader = document.createElement("th");
+            optionsHeader.innerHTML = "Opciones";
+            headerRow.appendChild(optionsHeader);
+            
+            for (var i = 0; i < rows.length; i++) {
+                var lastCell = rows[i].insertCell(-1);
+                lastCell.innerHTML = "Opciones";
+            }
+        }
+
+
+    </script>
+
+
+
+
+
+   
+    
+    
 
 </body>
 

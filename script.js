@@ -42,7 +42,6 @@ fgp_loader.innerHTML = /* html */ `
     }
 </style>
 <div class="spinner"></div>
-<h2 class="title">Loading...</h2>
 `;
 document.body.appendChild(fgp_loader);
 

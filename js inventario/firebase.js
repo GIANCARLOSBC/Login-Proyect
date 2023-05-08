@@ -1,16 +1,15 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js'
-import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, getDoc, updateDoc, getDocs } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js'
-
+import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, getDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js'
 
 // Configuración de Firebase de tu aplicación web
 const firebaseConfig = {
-  apiKey: 'AIzaSyAWMP63y4Pn2zVXswRsgp02Q5XuUJVWy6M',
-  authDomain: 'crud-408cb.firebaseapp.com',
-  projectId: 'crud-408cb',
-  storageBucket: 'crud-408cb.appspot.com',
-  messagingSenderId: '801041061477',
-  appId: '1:801041061477:web:40cfb0da01aa0f1447188c'
-}
+  apiKey: "AIzaSyBOdPEILlM3Fr7ReGbgipEN1paPq2-xgyQ",
+  authDomain: "inventario-23870.firebaseapp.com",
+  projectId: "inventario-23870",
+  storageBucket: "inventario-23870.appspot.com",
+  messagingSenderId: "916194529330",
+  appId: "1:916194529330:web:e46c2d1721e286fc4eac2b"
+};
 
 // INICIAR FIREBASE
 export const app = initializeApp(firebaseConfig)
@@ -34,16 +33,3 @@ export const onGetTasks = (callback) => onSnapshot(collection(db, 'tasks'), call
 /// ////////////////////////////////////////////////
 /// ///////////////////////////////////////////////
 
-export const getTotalTasks = async () => {
-  const querySnapshot = await getDocs(collection(db, 'tasks'))
-  const totalTasks = querySnapshot.size
-  return totalTasks
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const divTotalTasks = document.getElementById('totalTasks')
-
-  getTotalTasks().then((total) => {
-    divTotalTasks.innerHTML = ` ${total}`
-  })
-})

@@ -1,8 +1,7 @@
 import { onGetTasks, guardarTarea, eliminarTarea, traerTarea, actualizarTarea } from './firebase.js'
 import { abrirModal, cerrarModal } from './modal/modal.js'
-const taskForm = document.getElementById('task-form')
-const tasksContainer = document.getElementById('tasks-container')
-
+const taskForm = document.getElementById('task-form1')
+const tasksContainer = document.getElementById('tasks-container1')
 
 
 
@@ -10,15 +9,13 @@ const tasksContainer = document.getElementById('tasks-container')
 let editStatus = false
 let id = ''
 
-
-
 window.addEventListener('DOMContentLoaded', async () => {
   // CUANDO SE TRAEN LAS TAREAS
   
   onGetTasks((querySnapshot) => { // querySnapshot contiene todas las tareasguardadas
     tasksContainer.innerHTML = ''
 
-    let total = 0
+   
 
     querySnapshot.forEach((doc) => {
       const tarea = doc.data()
@@ -26,12 +23,11 @@ window.addEventListener('DOMContentLoaded', async () => {
 
       tasksContainer.innerHTML += `
         <tr>
-          <td>${tarea.nombre}</td>
-          <td>${tarea.apellidop}</td>
-          <td>${tarea.apellidom}</td>
-          <td>${tarea.telefono}</td>
-          <td>${tarea.email}</td>
-          <td>${tarea.run}</td>
+          <td>${tarea.plato}</td>
+          <td>${tarea.bebidas}</td>
+          <td>${tarea.mesa}</td>
+          <td>${tarea.ganancias}</td>
+          <td>${tarea.fecha}</td>
           <td>
             <button class=' btn btn-warning btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
             <button class=' btn btn-danger btn-delete' data-id="${doc.id}"><i class="fa-solid fa-trash"></i></button>
@@ -42,14 +38,12 @@ window.addEventListener('DOMContentLoaded', async () => {
           </td>
         </tr>`
 
-        total++;
-        
+   
         
         
     })
 
-   
-    document.getElementById('totalTasks').innerText = total.toString()
+
     
 
     // CLICK EN ELIMINAR TAREA
@@ -57,7 +51,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     btnsDelete.forEach((btn) =>
       btn.addEventListener('click', async ({ target: { dataset } }) => {
-        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este usuario?')
+        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar estos datos?')
         if (confirmDelete) {
         try {
           await eliminarTarea(dataset.id)
@@ -107,18 +101,18 @@ window.addEventListener('DOMContentLoaded', async () => {
       })
     })
   })
-  })
+})
 
-  // LLENAR EL FORMULARIO ///////////////////////////////////////////
-  let newData = {}
+// LLENAR EL FORMULARIO ///////////////////////////////////////////
+let newData = {}
 
-  taskForm.addEventListener('input', async (e) => {
-    newData = { ...newData, [e.target.name]: e.target.value }
-  })
+taskForm.addEventListener('input', async (e) => {
+  newData = { ...newData, [e.target.name]: e.target.value }
+})
 
-  // ENVIAR EL FORMULARIO ///////////////////////////////////////////
-  taskForm.addEventListener('submit', async (e) => {
-    e.preventDefault()
+// ENVIAR EL FORMULARIO ///////////////////////////////////////////
+taskForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
 
   try {
     if (!editStatus) {
@@ -182,14 +176,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     const rows = tasksContainer.querySelectorAll('tr');
 
     rows.forEach(row => {
-      const nombre = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
-      const apellidop = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
-      const apellidom = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
-      const telefono = row.querySelector('td:nth-child(4)').innerText.toLowerCase();
-      const run = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
-      const email = row.querySelector('td:nth-child(6)').innerText.toLowerCase();
+      const platos = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
+      const bebidas = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+      const mesa = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+      const ganancias = row.querySelector('td:nth-child(4)').innerText.toLowerCase();
+      const fecha = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
 
-      const matches = [nombre, apellidop, apellidom, telefono, run, email].filter(column => column.includes(query));
+      const matches = [platos, bebidas, mesa, ganancias, fecha].filter(column => column.includes(query));
 
       if (matches.length > 0) {
         row.style.display = '';
@@ -200,17 +193,17 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
 
 
-  
+  const query = searchInput.value.toLowerCase();
 
-  
+  const rows = tasksContainer.querySelectorAll('tr');
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const shouldHide = !text.includes(query);
+    row.style.display = shouldHide ? 'none' : 'table-row';
+  });
 
 
-
-
-  
-
-
-    
 
 
 

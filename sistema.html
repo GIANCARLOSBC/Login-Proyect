@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/openmodal.css">
 
 </head>
 
@@ -70,24 +71,53 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">PANTALLAS:</h6>
-                        <a class="collapse-item" href="tables.html">Registro Empleados</a>
                         <a class="collapse-item" href="#openModal">Gasto Semanal</a>
                         <a class="collapse-item" href="#openModal">Gasto Mensual</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">OTRAS PÁGINAS:</h6>
 
+
                     </div>
                 </div>
             </li>
 
+            
+            <!-- MODAL GASTO SEMANAL -->
 
+
+            <div id="openModal" class="modalDialog">
+                <div class="card-body">
+                    <a href="#close" title="Close" class="close">X</a>
+                    <h1 class="h4">Registro ganacias Semanales</h1>
+                    <form id="">
+                        <label for="lunes"><b>Lunes </b></label>
+                        <input name="lunes" type="text" id="" class="form-control mb-3"/>
+              
+                        <label for="martes"><b>Martes </b></label>
+                        <input name="martes" type="number" id="task-apellidop" class="form-control mb-3" />
+              
+                        <label for="miercoles"><b>Miercoles</b></label>
+                        <input name="miercoles" type="number" id="" class="form-control mb-3"/>
+              
+                        <label for="jueves"><b>Jueves </b></label>
+                        <input name="jueves" type="number" id="" class="form-control mb-3" />
+                          
+                        <label for="viernes"><b>Viernes</b></label>
+                        <input name="viernes" type="number" id="" class="form-control mb-3"/>
+
+
+                        <button class="btn btn-success " id="">Guardar</button>
+                        <button  class="btn btn-danger" id="">Salir</button>
+                      </form>
+                </div>
+            </div>
             
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="inventario.html">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Resultados</span></a>
+                    <span>Inventario</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
@@ -274,7 +304,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Empleados Total</div>
-                                                <div>Total de tareas: <span id="total-tasks"></span></div>
+                                                <div id="totalTasks"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -382,8 +412,9 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Todos los derechos reservados 2023</span>
+                        <span id="anioActual">Copyright &copy; Todos los derechos reservados 2023</span>
                     </div>
+                      
                 </div>
             </footer>
             <!-- End of Footer -->
@@ -406,9 +437,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro que deseas salir?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
                 </div>
                 <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
                 <div class="modal-footer">
@@ -430,12 +458,38 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
+    
 
     <script src="js/jspdf.debug.js"></script>
     <script src="js/html2canvas.js"></script>
-    <script src="chart.js"></script>
+    <script src="js/firebase.js"  type="module" defer></script>
+
+
+
+    <script>
+        // Obtenemos el elemento span con el ID que definimos
+        const anioActual = document.getElementById("anioActual");
+    
+        // Obtenemos el año actual
+        const fechaActual = new Date();
+        const anio = fechaActual.getFullYear();
+    
+        // Actualizamos el contenido del span con el año actual
+        anioActual.textContent = `Copyright &copy; Todos los derechos reservados ${anio}`;
+    
+        // Actualizamos el contenido del span cada vez que cambie el año
+        setInterval(() => {
+        const fechaActualizada = new Date();
+        const anioActualizado = fechaActualizada.getFullYear();
+        if (anioActualizado > anio) {
+            anioActual.textContent = `Copyright &copy; Todos los derechos reservados ${anioActualizado}`;
+            anio = anioActualizado;
+        }
+        }, 1000);
+    </script>
+
+
+
     
 
 </html>

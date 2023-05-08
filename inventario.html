@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="Software ENTRE OLIVOS">
     <meta name="author" content="">
 
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
@@ -16,11 +16,11 @@
 
             
 
-    <title>Restaurante</title>
+    <title>Inventario</title>
 
     <!-- Custom fonts for this template -->
     <script src="https://kit.fontawesome.com/43380dedf7.js" crossorigin="anonymous"></script>
-    <script src="js/index.js" type="module" defer></script>
+    <script src="js inventario/index.js" type="module" defer></script>
     <link rel="stylesheet" href="css/style.css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -70,17 +70,14 @@
                 Addicional
             </div>
 
-           
-
-           
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item active">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Personal | Empleados</span></a>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="inventario.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Inventario</span></a>
             </li>
 
+        
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -90,7 +87,8 @@
             </div>
 
         </ul>
-        <!-- End of Sidebar -->
+        
+       
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -186,10 +184,10 @@
                     <!-- Button -->
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Total Empleados: <span id="totalTasks"></span></h1>
+                        <h1 class="h3 mb-0 text-gray-800">Inventario</h1>
                         <button id="btn-agregar-nuevo" type="button" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm ">
                             <span class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm"><i
-                                class="fas fa-sm text-white-50"></i>Registrar Empleados</span>
+                                class="fas fa-sm text-white-50"></i>Registrar Inventario</span>
 
                         </button>
 
@@ -219,17 +217,16 @@
                                 <table class="order-table table-bordered table" id="example" width="100%"cellspacing="0">
                                     <thead>
                                         <tr>
-                                          <th>Nombre</th>
-                                          <th>Apellido Paterno</th>
-                                          <th>Apellido Materno</th>
-                                          <th>Teléfono</th>
-                                          <th>Email</th>
-                                          <th>Run</th>
+                                          <th>Plato</th>
+                                          <th>Bebidas</th>
+                                          <th>Mesa</th>
+                                          <th>Ganancias</th>
+                                          <th>Fecha</th>
                                           <th>Opciones</th>
                                         </tr>
                                       </thead>
                               
-                                      <tbody id="tasks-container" >
+                                      <tbody id="tasks-container1" >
                                         
                                       </tbody>
                                 </table>
@@ -243,38 +240,32 @@
                 <!-- MODAL -->
        
               
-                <dialog id="modal" class="modalx">
+                <dialog id="modal" class="modal1">
                     <div class=" card mx-auto" style="max-width: 500px;">
                       <div class="card-body">
-                        <h1 class="h4" style="margin-bottom: 25px;" >Registro de Empleados</h1>
+                        <h1 class="h4" style="margin-bottom: 25px;">Registro Inventario </h1>
                 
-                        <form id="task-form">
-                          <label for="nombre"><b>Nombre: </b></label>
-                          <input name="nombre" type="text" id="task-nombre" class="form-control mb-3"
-                            placeholder="Nombre"  maxlength="13" required/>
+                        <form id="task-form1">
+                          <label for="plato"><b>Plato</b></label>
+                          <input name="plato" type="text" id="task-plato" class="form-control mb-3"
+                            required/>
                 
-                          <label for="apellidop"><b>Apellido Paterno: </b></label>
-                          <input name="apellidop" type="text" id="task-apellidop" class="form-control mb-3" 
-                            placeholder="Apellido Paterno" maxlength="14" required/>
+                          <label for="bebidas"><b>Bebidas </b></label>
+                          <input name="bebidas" type="text" id="task-bebidas" class="form-control mb-3" 
+                              required placeholder="0" />
                 
-                          <label for="apellidom"><b>Apellido Materno:</b></label>
-                          <input name="apellidom" type="text" id="task-apellidom" class="form-control mb-3"
-                            placeholder="Apellido Materno" maxlength="14" required />
-                
-                          <label for="telefono"><b>Teléfono: </b></label>
-                          <input name="telefono" type="tel" id="task-telefono" class="form-control mb-3"
-                            placeholder="Teléfono" maxlength="17" required />
+                          <label for="mesa"><b>Mesa</b></label>
+                          <input name="mesa" type="number" id="task-mesa" class="form-control mb-3"
+                             required placeholder="0" />
 
+                         <label for="ganacias"><b>Ganancia</b></label>
+                          <input name="ganancias" type="number" id="task-ganancias" class="form-control mb-3"
+                              required placeholder="0"/>
 
-                          
-                          <label for="email"><b>Email </b></label>
-
-                          <input name="email" type="email" id="task-email" class="form-control mb-3"
-                                placeholder="Email" maxlength="35"  required/>
+                         <label for="fecha"><b>Fecha</b></label>
+                         <input name="fecha" type="date" id="task-fecha" class="form-control mb-3"
+                             required placeholder="0"/>
                 
-                          <label for="run"><b>Rut: </b></label>
-                          <input name="run" type="text" id="task-run" class="form-control mb-3"
-                            placeholder="Rut" maxlength="20" required/>
 
                 
                           <button class="btn btn-success " id="btn-task-form">Guardar</button>
@@ -282,6 +273,8 @@
                         </form>
                       </div>
                   </dialog>
+
+                <!-- MODAL  CIERRE -->
                    
 
 
@@ -338,8 +331,8 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- DATABASE -->
-    <script src="js/demo/datatables-demo.js"></script>
+
+    
 
 
   
@@ -362,7 +355,7 @@
         for (let i = 0; i < table.rows[0].cells.length; i++) {
         const header = table.rows[0].cells[i].innerHTML.toLowerCase();
 
-        if (header === 'nombre' || header === 'apellido paterno' || header === 'apellido materno' || header === 'teléfono' || header === 'email' || header === 'run') {
+        if (header === 'plato' || header === 'bebidas' || header === 'mesa' || header === 'ganancias' || header === 'fecha') {
             headers.push(header);
         }
         }
@@ -390,7 +383,7 @@
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Usuarios');
     
         // Descargar el archivo Excel
-        XLSX.writeFile(workbook, 'datos.xlsx');
+        XLSX.writeFile(workbook, 'inventario.xlsx');
         });
 
     </script>
@@ -439,14 +432,14 @@
     <script>
         // Obtenemos el elemento span con el ID que definimos
         const anioActual = document.getElementById("anioActual");
-
+    
         // Obtenemos el año actual
         const fechaActual = new Date();
         const anio = fechaActual.getFullYear();
-
+    
         // Actualizamos el contenido del span con el año actual
         anioActual.textContent = `Copyright &copy; Todos los derechos reservados ${anio}`;
-
+    
         // Actualizamos el contenido del span cada vez que cambie el año
         setInterval(() => {
         const fechaActualizada = new Date();
@@ -457,7 +450,7 @@
         }
         }, 1000);
     </script>
-
+    
 
 
 

@@ -3,14 +3,8 @@ import { abrirModal, cerrarModal } from './modal/modal.js'
 const taskForm = document.getElementById('task-form')
 const tasksContainer = document.getElementById('tasks-container')
 
-
-
-
-
 let editStatus = false
 let id = ''
-
-
 
 window.addEventListener('DOMContentLoaded', async () => {
   // CUANDO SE TRAEN LAS TAREAS
@@ -48,7 +42,6 @@ window.addEventListener('DOMContentLoaded', async () => {
         
     })
 
-   
     document.getElementById('totalTasks').innerText = total.toString()
     
 
@@ -198,19 +191,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
     });
   });
-
-
-  
-
-  
-
-
-
-
-  
-
-
-    
 
 
 

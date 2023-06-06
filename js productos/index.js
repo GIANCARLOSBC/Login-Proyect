@@ -1,7 +1,10 @@
 import { onGetTasks, guardarTarea, eliminarTarea, traerTarea, actualizarTarea } from './firebase.js'
 import { abrirModal, cerrarModal } from './modal/modal.js'
-const taskForm = document.getElementById('task-form')
-const tasksContainer = document.getElementById('tasks-container')
+const taskForm = document.getElementById('task-form1')
+const tasksContainer = document.getElementById('tasks-container1')
+
+
+
 
 let editStatus = false
 let id = ''
@@ -12,7 +15,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   onGetTasks((querySnapshot) => { // querySnapshot contiene todas las tareasguardadas
     tasksContainer.innerHTML = ''
 
-    let total = 0
+   
 
     querySnapshot.forEach((doc) => {
       const tarea = doc.data()
@@ -20,12 +23,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 
       tasksContainer.innerHTML += `
         <tr>
-          <td>${tarea.nombre}</td>
-          <td>${tarea.apellidop}</td>
-          <td>${tarea.apellidom}</td>
-          <td>${tarea.telefono}</td>
-          <td>${tarea.email}</td>
-          <td>${tarea.run}</td>
+          <td><img id="task-img-${doc.id}" alt="Imagen de la tarea" style="max-width: 100px;"></td>
+          <td>${tarea.codigo}</td>
+          <td>${tarea.descripcion}</td>
+          <td>${tarea.stock}</td>
+          <td>${tarea.preciocompra}</td>
+          <td>${tarea.precioventa}</td>
+          <td>${tarea.fecha}</td>
           <td>
             <button class=' btn btn-warning btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
             <button class=' btn btn-danger btn-delete' data-id="${doc.id}"><i class="fa-solid fa-trash"></i></button>
@@ -34,15 +38,49 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     
           </td>
-        </tr>`
+        </tr>`;
 
-        total++;
+        
+        const inputImagen = document.getElementById('task-imagen');
+        const imagen = inputImagen.files[0];
+  
+        if (imagen) {
+          const reader = new FileReader();
+  
+          reader.onload = function (e) {
+            const imgElement = document.getElementById(`task-img-${doc.id}`);
+            imgElement.src = e.target.result;
+  
+            // Guardar la imagen en el local storage
+            localStorage.setItem(`task-img-${doc.id}`, e.target.result);
+          };
+  
+          reader.readAsDataURL(imagen);
+        } else {
+          // Si no hay una nueva imagen seleccionada, intentar recuperarla del local storage
+          const savedImage = localStorage.getItem(`task-img-${doc.id}`);
+  
+          if (savedImage) {
+            const imgElement = document.getElementById(`task-img-${doc.id}`);
+            imgElement.src = savedImage;
+          }
+        }
         
         
+ 
+   
         
-    })
+        
+    });
+    
 
-    document.getElementById('totalTasks').innerText = total.toString()
+
+
+    
+
+  
+
+
     
 
     // CLICK EN ELIMINAR TAREA
@@ -50,7 +88,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     btnsDelete.forEach((btn) =>
       btn.addEventListener('click', async ({ target: { dataset } }) => {
-        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este usuario?')
+        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar estos datos?')
         if (confirmDelete) {
         try {
           await eliminarTarea(dataset.id)
@@ -78,6 +116,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     // CLICK EN EDITAR TAREA
     const btnsEdit = tasksContainer.querySelectorAll('.btn-edit')
 
+
     btnsEdit.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         const taskId = e.target.dataset.id;
@@ -86,7 +125,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             .then((doc) => {
               const task = doc.data();
               for (const key in task) {
-                if (Object.hasOwnProperty.call(task, key)) {
+                if (taskForm[`task-${key}`] && taskForm[`task-${key}`].type !== 'file') {
                   taskForm[`task-${key}`].value = task[key];
                 }
               }
@@ -101,19 +140,20 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
       });
     });
+    
   })
-  })
+})
 
-  // LLENAR EL FORMULARIO ///////////////////////////////////////////
-  let newData = {}
+// LLENAR EL FORMULARIO ///////////////////////////////////////////
+let newData = {}
 
-  taskForm.addEventListener('input', async (e) => {
-    newData = { ...newData, [e.target.name]: e.target.value }
-  })
+taskForm.addEventListener('input', async (e) => {
+  newData = { ...newData, [e.target.name]: e.target.value }
+})
 
-  // ENVIAR EL FORMULARIO ///////////////////////////////////////////
-  taskForm.addEventListener('submit', async (e) => {
-    e.preventDefault()
+// ENVIAR EL FORMULARIO ///////////////////////////////////////////
+taskForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
 
   try {
     if (!editStatus) {
@@ -177,14 +217,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     const rows = tasksContainer.querySelectorAll('tr');
 
     rows.forEach(row => {
-      const nombre = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
-      const apellidop = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
-      const apellidom = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
-      const telefono = row.querySelector('td:nth-child(4)').innerText.toLowerCase();
-      const run = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
-      const email = row.querySelector('td:nth-child(6)').innerText.toLowerCase();
+      const platos = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
+      const bebidas = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+      const mesa = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+      const ganancias = row.querySelector('td:nth-child(4)').innerText.toLowerCase();
+      const fecha = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
 
-      const matches = [nombre, apellidop, apellidom, telefono, run, email].filter(column => column.includes(query));
+      const matches = [platos, bebidas, mesa, ganancias, fecha].filter(column => column.includes(query));
 
       if (matches.length > 0) {
         row.style.display = '';
@@ -193,6 +232,19 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
     });
   });
+
+
+  const query = searchInput.value.toLowerCase();
+
+  const rows = tasksContainer.querySelectorAll('tr');
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const shouldHide = !text.includes(query);
+    row.style.display = shouldHide ? 'none' : 'table-row';
+  });
+
+
 
 
 

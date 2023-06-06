@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Software ENTRE OLIVOS">
+    <meta name="author" content="">
+    <link rel="icon" href="img/logo1.png" type="image/x-icon">
+
+
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+
+
+            
+
+    <title>Productos</title>
+
+    <!-- Custom fonts for this template -->
+    <script src="https://kit.fontawesome.com/43380dedf7.js" crossorigin="anonymous"></script>
+    <script src="js productos/index.js" type="module" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/modal.css">
+
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav black23 sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="sistema.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Entre Olivos</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="sistema.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Panel</span></a>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addicional
+            </div>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="inventario.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Productos</span></a>
+            </li>
+
+        
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        
+       
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
+
+                
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search" >
+                                    <div class="input-group">
+                                        <input type="text" class="form-control col-md-3 light-table-filter" data-table="order-table"
+                                            placeholder="Buscar..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-dark" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">ADMIN</span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile1.webp">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+            
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Button -->
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Administrar Productos</h1>
+                        <button id="btn-agregar-nuevo" type="button" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm ">
+                            <span class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm"><i
+                                class="fas fa-sm text-white-50"></i>Agregar Producto</span>
+
+                        </button>
+
+                        
+
+                    </div>
+
+            
+                    
+                    
+                
+                
+
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            
+                            <button id="download-excel-btn" class="btn btn-success" ><i class="fa-solid fa-file-excel"></i></button>
+                            <button onclick="printTable()" class="btn btn-info"><i class="fa-solid fa-print"></i></button>
+
+                            <form
+                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search float-right">
+                            
+                                <input type="search" class="form-control" placeholder="Buscar.." aria-label="Search" id="search-input">
+                            </form>
+
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                            
+                                <table class="order-table table-bordered table" id="example" width="100%"cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                          <th>Imagen</th>
+                                          <th>Codigo</th>
+                                          <th>Descripción</th>
+                                          <th>Stock</th>
+                                          <th>Precio de Compra</th>
+                                          <th>Precio de Venta</th>
+                                          <th>Fecha</th>
+                                          <th>Opciones</th>
+                                        </tr>
+                                      </thead>
+                              
+                                      <tbody id="tasks-container1" >
+                                        
+                                      </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                
+                <!-- MODAL -->
+       
+              
+                <dialog id="modal" class="modal1">
+                    <div class=" card mx-auto" style="max-width: 500px;">
+                      <div class="card-body">
+                        <h1 class="h4" style="margin-bottom: 25px;">Registrar Producto</h1>
+                
+                        <form id="task-form1">
+                          <label for="imagen"><b>Imagen</b></label>
+                          <input name="imagen" type="file" id="task-imagen" accept="image/*" class="form-control mb-3"/>
+                
+                          <label for="codigo"><b>Codigo </b></label>
+                          <input name="codigo" type="text" id="task-codigo" class="form-control mb-3" 
+                              required placeholder="Codigo" />
+                
+                          <label for="descripcion"><b>Descripción</b></label>
+                          <input name="descripcion" type="text" id="task-descripcion" class="form-control mb-3"
+                             required placeholder="Descripción" />
+
+                          <label for="stock"><b>Stock</b></label>
+                          <input name="stock" type="number" id="task-stock" class="form-control mb-3"
+                             required placeholder="0"/>
+
+                          <label for="preciocompra"><b>Precio de Compra</b></label>
+                          <input name="preciocompra" type="number" id="task-preciocompra" class="form-control mb-3"
+                             required placeholder="0"/>
+
+                          <label for="precioventa"><b>Precio de Venta</b></label>
+                          <input name="precioventa" type="number" id="task-precioventa" class="form-control mb-3"
+                             required placeholder="0"/>
+                        
+                         <label for="fecha"><b>Fecha Agregado</b></label>
+                         <input name="fecha" type="date" id="task-fecha" class="form-control mb-3"
+                             required placeholder="0"/>                  
+                
+
+                
+                          <button class="btn btn-success " id="btn-task-form">Guardar</button>
+                          <button  class="btn btn-danger" id="btn-task-exit">Salir</button>
+                        </form>
+                      </div>
+                  </dialog>
+
+                <!-- MODAL  CIERRE -->
+
+
+
+               
+
+
+
+                  
+
+            <!-- Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span id="anioActual">Copyright &copy; Todos los derechos reservados 2023</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+
+
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro que deseas salir?</h5>
+                </div>
+                <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="index.html">Cerrar sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!--querys-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- BOOSTRAP ADMIN JS-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- DATABASE CSS-->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
+    
+
+
+  
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script> 
+
+    
+    <script>
+        // Seleccionar el botón de descarga
+        const downloadExcelBtn = document.querySelector('#download-excel-btn');
+    
+        // Agregar un controlador de eventos para el botón de descarga
+        downloadExcelBtn.addEventListener('click', () => {
+        // Obtener los datos de la tabla
+        const table = document.querySelector('#example');
+        const tableData = [];
+        const headers = [];
+        const rows = table.rows;
+    
+        // Obtener los encabezados de la tabla
+        for (let i = 0; i < table.rows[0].cells.length; i++) {
+        const header = table.rows[0].cells[i].innerHTML.toLowerCase();
+
+        if (header === 'plato' || header === 'bebidas' || header === 'mesa' || header === 'ganancias' || header === 'fecha') {
+            headers.push(header);
+        }
+        }
+
+        // Obtener los datos de la tabla
+        for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const rowData = {};
+
+        for (let j = 0; j < row.cells.length; j++) {
+            const header = headers[j];
+            if (header) {
+            rowData[header] = row.cells[j].innerHTML;
+            }
+        }
+
+        tableData.push(rowData);  
+}
+    
+        // Crear un objeto de hoja de cálculo de Excel
+        const worksheet = XLSX.utils.json_to_sheet(tableData);
+    
+        // Crear un libro de Excel y agregar la hoja de cálculo
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'productos');
+    
+        // Descargar el archivo Excel
+        XLSX.writeFile(workbook, 'productos.xlsx');
+        });
+
+    </script>
+
+
+    <script>
+        
+        function printTable() {
+            // Eliminar la columna "Opciones" del encabezado de la tabla
+            var table = document.getElementById("example");
+            var optionsHeader = table.rows[0].cells[table.rows[0].cells.length - 1];
+            optionsHeader.parentNode.removeChild(optionsHeader);
+
+            // Eliminar la columna "Opciones" de cada fila del cuerpo de la tabla
+            var rows = table.rows;
+            for (var i = 0; i < rows.length; i++) {
+                var optionsCell = rows[i].cells[rows[i].cells.length - 1];
+                optionsCell.parentNode.removeChild(optionsCell);
+            }
+
+            // Imprimir la tabla
+            var printContents = document.getElementById("example").outerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+
+            document.body.innerHTML = originalContents;
+
+            // Restaurar la tabla original
+            var headerRow = table.rows[0];
+            var optionsHeader = document.createElement("th");
+            optionsHeader.innerHTML = "Opciones";
+            headerRow.appendChild(optionsHeader);
+            
+            for (var i = 0; i < rows.length; i++) {
+                var lastCell = rows[i].insertCell(-1);
+                lastCell.innerHTML = "Opciones";
+            }
+        }
+
+
+    </script>
+
+
+    <script>
+        // Obtenemos el elemento span con el ID que definimos
+        const anioActual = document.getElementById("anioActual");
+    
+        // Obtenemos el año actual
+        const fechaActual = new Date();
+        const anio = fechaActual.getFullYear();
+    
+        // Actualizamos el contenido del span con el año actual
+        anioActual.textContent = `Copyright &copy; Todos los derechos reservados ${anio}`;
+    
+        // Actualizamos el contenido del span cada vez que cambie el año
+        setInterval(() => {
+        const fechaActualizada = new Date();
+        const anioActualizado = fechaActualizada.getFullYear();
+        if (anioActualizado > anio) {
+            anioActual.textContent = `Copyright &copy; Todos los derechos reservados ${anioActualizado}`;
+            anio = anioActualizado;
+        }
+        }, 1000);
+    </script>
+    
+
+
+
+
+   
+    
+    
+
+</body>
+
+</html>

@@ -79,27 +79,31 @@ window.addEventListener('DOMContentLoaded', async () => {
     // CLICK EN EDITAR TAREA
     const btnsEdit = tasksContainer.querySelectorAll('.btn-edit')
 
-
     btnsEdit.forEach((btn) => {
-      btn.addEventListener('click', async (e) => {
-        try {
-          const doc = await traerTarea(e.target.dataset.id)
-          const task = doc.data()
-
-          for (const key in task) {
-            taskForm[`task-${key}`].value = task[key]
-          }
-
-          editStatus = true
-          id = doc.id
-          taskForm['btn-task-form'].innerText = 'Actualizar'
-          abrirModal()
-        } catch (error) {
-          throw new
-          Error(error)
+      btn.addEventListener('click', (e) => {
+        const taskId = e.target.dataset.id;
+        if (taskId) {
+          traerTarea(taskId)
+            .then((doc) => {
+              const task = doc.data();
+              for (const key in task) {
+                if (Object.hasOwnProperty.call(task, key)) {
+                  taskForm[`task-${key}`].value = task[key];
+                }
+              }
+              editStatus = true;
+              id = doc.id;
+              taskForm['btn-task-form'].innerText = 'Actualizar';
+              abrirModal();
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         }
-      })
-    })
+      });
+    });
+
+
   })
 })
 

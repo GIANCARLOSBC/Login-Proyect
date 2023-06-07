@@ -18,7 +18,7 @@
 
             
 
-    <title>Productos</title>
+    <title>Materiales</title>
 
     <!-- Custom fonts for this template -->
     <script src="https://kit.fontawesome.com/43380dedf7.js" crossorigin="anonymous"></script>
@@ -74,9 +74,9 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="inventario.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Productos</span></a>
+                <a class="nav-link" href="Productos.html">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Materiales</span></a>
             </li>
 
         
@@ -172,10 +172,11 @@
                     <!-- Button -->
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Administrar Productos</h1>
+                        <h1 class="h2 mb-0 text-gray-800">Administrar Materiales</h1>
+                        <p class="h4">Total Materiales: <span id="totalTasksmaterial"></span></p>
                         <button id="btn-agregar-nuevo" type="button" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm ">
                             <span class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm"><i
-                                class="fas fa-sm text-white-50"></i>Agregar Producto</span>
+                                class="fas fa-sm text-white-50"></i>Agregar Material</span>
 
                         </button>
 
@@ -193,9 +194,11 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            
+
                             <button id="download-excel-btn" class="btn btn-success" ><i class="fa-solid fa-file-excel"></i></button>
                             <button onclick="printTable()" class="btn btn-info"><i class="fa-solid fa-print"></i></button>
+
+                            
 
                             <form
                             class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search float-right">
@@ -211,7 +214,7 @@
                                 <table class="order-table table-bordered table" id="example" width="100%"cellspacing="0">
                                     <thead>
                                         <tr>
-                                          <th>Imagen</th>
+                                          <th>Material</th>
                                           <th>Codigo</th>
                                           <th>Descripción</th>
                                           <th>Stock</th>
@@ -239,11 +242,11 @@
                 <dialog id="modal" class="modal1">
                     <div class=" card mx-auto" style="max-width: 500px;">
                       <div class="card-body">
-                        <h1 class="h4" style="margin-bottom: 25px;">Registrar Producto</h1>
+                        <h1 class="h4" style="margin-bottom: 25px;">Registrar Material</h1>
                 
                         <form id="task-form1">
-                          <label for="imagen"><b>Imagen</b></label>
-                          <input name="imagen" type="file" id="task-imagen" accept="image/*" class="form-control mb-3"/>
+                          <label for="material"><b>Material</b></label>
+                          <input name="material" type="text" id="task-material" class="form-control mb-3"/>
                 
                           <label for="codigo"><b>Codigo </b></label>
                           <input name="codigo" type="text" id="task-codigo" class="form-control mb-3" 
@@ -361,7 +364,7 @@
         for (let i = 0; i < table.rows[0].cells.length; i++) {
         const header = table.rows[0].cells[i].innerHTML.toLowerCase();
 
-        if (header === 'plato' || header === 'bebidas' || header === 'mesa' || header === 'ganancias' || header === 'fecha') {
+        if (header === 'material' || header === 'codigo' || header === 'descripcion' || header === 'stock' || header === 'preciocompra' || header === 'precioventa') {
             headers.push(header);
         }
         }

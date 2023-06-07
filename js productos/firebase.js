@@ -1,8 +1,9 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js'
-import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, getDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js'
+import {initializeApp } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js'
+import {getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, getDoc, updateDoc, getDocs, } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js'
 
 // Configuración de Firebase de tu aplicación web
-const firebaseConfig = {
+
+const firebaseConfig2 = {
   apiKey: "AIzaSyDy0hm-IkvTjjmq6SfCsmEaiwTxSp6x8WE",
   authDomain: "fir-crud-ed9bc.firebaseapp.com",
   databaseURL: "https://fir-crud-ed9bc-default-rtdb.firebaseio.com",
@@ -13,9 +14,8 @@ const firebaseConfig = {
 };
 
 // INICIAR FIREBASE
-export const app = initializeApp(firebaseConfig)
-export const db = getFirestore()
-
+export const app2 = initializeApp(firebaseConfig2, "App2");
+export const db = getFirestore(app2);
 // GUARDAR 1 TAREA
 export const guardarTarea = (tareas) => addDoc(collection(db, 'tasks'), tareas)
 
@@ -33,4 +33,18 @@ export const onGetTasks = (callback) => onSnapshot(collection(db, 'tasks'), call
 
 /// ////////////////////////////////////////////////
 /// ///////////////////////////////////////////////
+
+export const getTotalTasksmaterial = async () => {
+  const querySnapshot = await getDocs(collection(db, 'tasks'));
+  const totalTasksmaterial = querySnapshot.size;
+  return totalTasksmaterial;
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const divTotalTasksmaterial = document.getElementById('totalTasksmaterial');
+
+  getTotalTasksmaterial().then((total) => {
+    divTotalTasksmaterial.innerHTML = `${total}`;
+  });
+});
 

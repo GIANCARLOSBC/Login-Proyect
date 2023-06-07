@@ -19,7 +19,8 @@ downloadExcelBtn.addEventListener('click', () => {
       header === 'apellido materno' ||
       header === 'teléfono' ||
       header === 'email' ||
-      header === 'run'
+      header === 'run' ||
+      header === 'salario' 
     ) {
       headers.push(header);
     }

@@ -26,6 +26,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           <td>${tarea.telefono}</td>
           <td>${tarea.email}</td>
           <td>${tarea.run}</td>
+          <td>${tarea.salario}</td>
           <td>
             <button class=' btn btn-warning btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
             <button class=' btn btn-danger btn-delete' data-id="${doc.id}"><i class="fa-solid fa-trash"></i></button>
@@ -46,34 +47,39 @@ window.addEventListener('DOMContentLoaded', async () => {
     
 
     // CLICK EN ELIMINAR TAREA
-    const btnsDelete = tasksContainer.querySelectorAll('.btn-delete')
+    const btnsDelete = tasksContainer.querySelectorAll('.btn-delete');
 
     btnsDelete.forEach((btn) =>
-      btn.addEventListener('click', async ({ target: { dataset } }) => {
-        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este usuario?')
+      btn.addEventListener('click', async ({ target }) => {
+        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar estos datos?');
         if (confirmDelete) {
-        try {
-          await eliminarTarea(dataset.id)
-          setTimeout(() => {
-            Toastify({
-              text: 'Borrado exitosamente',
-              duration: 3000,
-              close: true,
-              gravity: 'bottom',
-              position: 'right',
-              style: {
-                background: "rgb(102, 23, 29)",
-              },
-              stopOnFocus: true,
-              className: 'toastify-success'
-            }).showToast();
-          }, 2000); // delay of 2 seconds
-          
-        } catch (error) {
-          throw new Error(error)
-      } }
+          try {
+            const dataset = target.dataset;
+            if (dataset && dataset.id) {
+              await eliminarTarea(dataset.id);
+              setTimeout(() => {
+                Toastify({
+                  text: 'Borrado exitosamente',
+                  duration: 3000,
+                  close: true,
+                  gravity: 'bottom',
+                  position: 'right',
+                  style: {
+                    background: "rgb(102, 23, 29)",
+                  },
+                  stopOnFocus: true,
+                  className: 'toastify-success'
+                }).showToast();
+              }, 2000); // delay of 2 seconds
+            } else {
+              throw new Error('El objeto dataset o dataset.id es indefinido.');
+            }
+          } catch (error) {
+            throw new Error(error);
+          }
+        }
       })
-    )
+    );
 
     // CLICK EN EDITAR TAREA
     const btnsEdit = tasksContainer.querySelectorAll('.btn-edit')

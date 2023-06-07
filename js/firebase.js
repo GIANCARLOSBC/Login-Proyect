@@ -3,7 +3,7 @@ import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, getDoc, u
 
 
 // Configuración de Firebase de tu aplicación web
-const firebaseConfig = {
+const firebaseConfig1 = {
   apiKey: 'AIzaSyAWMP63y4Pn2zVXswRsgp02Q5XuUJVWy6M',
   authDomain: 'crud-408cb.firebaseapp.com',
   projectId: 'crud-408cb',
@@ -13,8 +13,8 @@ const firebaseConfig = {
 }
 
 // INICIAR FIREBASE
-export const app = initializeApp(firebaseConfig)
-export const db = getFirestore()
+export const app1 = initializeApp(firebaseConfig1, "App1");
+export const db = getFirestore(app1);
 
 // GUARDAR 1 TAREA
 export const guardarTarea = (tareas) => addDoc(collection(db, 'tasks'), tareas)

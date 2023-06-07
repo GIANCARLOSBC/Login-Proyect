@@ -173,7 +173,8 @@
                     <!-- Button -->
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Total Empleados: <span id="totalTasks"></span></h1>
+                        <h1 class="h2 mb-0 text-gray-800">Administrar Trabajadores</h1>
+                        <p class="h4">Total Empleados: <span id="totalTasks"></span></p>
                         <button id="btn-agregar-nuevo" type="button" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm ">
                             <span class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm"><i
                                 class="fas fa-sm text-white-50"></i>Registrar Empleados</span>
@@ -219,6 +220,7 @@
                                           <th>Teléfono</th>
                                           <th>Email</th>
                                           <th>Run</th>
+                                          <th>Salario</th>
                                           <th>Opciones</th>
                                         </tr>
                                       </thead>
@@ -245,30 +247,34 @@
                         <form id="task-form">
                           <label for="nombre"><b>Nombre: </b></label>
                           <input name="nombre" type="text" id="task-nombre" class="form-control mb-3"
-                            placeholder="Nombre"  maxlength="13" required/>
+                            placeholder="Nombre"  maxlength="13"/>
                 
                           <label for="apellidop"><b>Apellido Paterno: </b></label>
                           <input name="apellidop" type="text" id="task-apellidop" class="form-control mb-3" 
-                            placeholder="Apellido Paterno" maxlength="14" required/>
+                            placeholder="Apellido Paterno" maxlength="14"/>
                 
                           <label for="apellidom"><b>Apellido Materno:</b></label>
                           <input name="apellidom" type="text" id="task-apellidom" class="form-control mb-3"
-                            placeholder="Apellido Materno" maxlength="14" required />
+                            placeholder="Apellido Materno" maxlength="14" />
                 
                           <label for="telefono"><b>Teléfono: </b></label>
                           <input name="telefono" type="tel" id="task-telefono" class="form-control mb-3"
-                            placeholder="Teléfono" maxlength="17" required />
+                            placeholder="Teléfono" maxlength="17"  />
 
 
                           
                           <label for="email"><b>Email </b></label>
 
-                          <input name="email" type="email" id="task-email" class="form-control mb-3"
-                                placeholder="Email" maxlength="35"  required/>
+                          <input name="email" id="task-email" class="form-control mb-3"
+                                placeholder="Email" maxlength="35"/>
                 
                           <label for="run"><b>Rut: </b></label>
                           <input name="run" type="text" id="task-run" class="form-control mb-3"
-                            placeholder="Rut" maxlength="20" required/>
+                            placeholder="Rut" maxlength="20" />
+                        
+                         <label for="salario"><b>Salario: </b></label>
+                         <input name="salario" type="number" id="task-salario" class="form-control mb-3"
+                            placeholder="Salario" />
 
                 
                           <button class="btn btn-success " id="btn-task-form">Guardar</button>

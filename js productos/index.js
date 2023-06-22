@@ -1,10 +1,8 @@
-import { onGetTasks, guardarTarea, eliminarTarea, traerTarea, actualizarTarea} from './firebase.js'
+import { onGetTasks, guardarTarea, eliminarTarea, traerTarea, actualizarTarea } from './firebase.js'
 import { abrirModal, cerrarModal } from './modal/modal.js'
+
 const taskForm = document.getElementById('task-form1')
 const tasksContainer = document.getElementById('tasks-container1')
-
-
-
 
 let editStatus = false
 let id = ''
@@ -12,8 +10,8 @@ let id = ''
 window.addEventListener('DOMContentLoaded', async () => {
   // CUANDO SE TRAEN LAS TAREAS
   
-  onGetTasks((querySnapshot) => { // querySnapshot contiene todas las tareasguardadas
-    tasksContainer.innerHTML = ''
+  onGetTasks((querySnapshot) => { // querySnapshot contiene todas las tareas guardadas
+    const fragment = document.createDocumentFragment(); // Crea un fragmento en memoria
 
     let total = 0
 
@@ -29,7 +27,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       } else {
         stockClass = 'btn-success';
       }
-      
 
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -46,63 +43,53 @@ window.addEventListener('DOMContentLoaded', async () => {
         </td>
       `;
       
-        tasksContainer.appendChild(row);
-        
-        total++;
-        
+      fragment.appendChild(row); // Agrega la fila al fragmento en memoria
+      total++;
     });
-    
+
+    tasksContainer.innerHTML = ''; // Limpia el contenedor antes de agregar elementos
+    tasksContainer.appendChild(fragment); // Agrega todos los elementos del fragmento al DOM de una sola vez
 
     document.getElementById('totalTasksmaterial').innerText = total.toString()
-
-
-
     
-
-  
-
-
-    
-
     // CLICK EN ELIMINAR TAREA
     const btnsDelete = tasksContainer.querySelectorAll('.btn-delete');
 
     btnsDelete.forEach((btn) =>
-      btn.addEventListener('click', async ({ target }) => {
-        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar estos datos?');
-        if (confirmDelete) {
-          try {
-            const dataset = target.dataset;
-            if (dataset && dataset.hasOwnProperty('id') && dataset.id !== "") {
-              await eliminarTarea(dataset.id);
-              setTimeout(() => {
-                Toastify({
-                  text: 'Borrado exitosamente',
-                  duration: 3000,
-                  close: true,
-                  gravity: 'bottom',
-                  position: 'right',
-                  style: {
-                    background: "rgb(102, 23, 29)",
-                  },
-                  stopOnFocus: true,
-                  className: 'toastify-success'
-                }).showToast();
-              }, 2000); // delay of 2 seconds
-            } else {
-              throw new Error('El objeto dataset o dataset.id es indefinido o está vacío.');
-            }
-          } catch (error) {
-            throw new Error(error);
+    btn.addEventListener('click', async function() {
+      const confirmDelete = confirm('¿Estás seguro de que deseas eliminar estos datos?');
+      if (confirmDelete) {
+        try {
+          const dataset = this.dataset;
+          if (dataset && dataset.hasOwnProperty('id') && dataset.id !== "") {
+            await eliminarTarea(dataset.id);
+            setTimeout(() => {
+              Toastify({
+                text: 'Borrado exitosamente',
+                duration: 3000,
+                close: true,
+                gravity: 'bottom',
+                position: 'right',
+                style: {
+                  background: "rgb(102, 23, 29)",
+                },
+                stopOnFocus: true,
+                className: 'toastify-success'
+              }).showToast();
+            }, 2000); // delay of 2 seconds
+          } else {
+            throw new Error('El objeto dataset o dataset.id es indefinido o está vacío.');
           }
+        } catch (error) {
+          console.error(error);
         }
-      })
-    );
-    
+      }
+    })
+  );
+
 
     // CLICK EN EDITAR TAREA
     const btnsEdit = tasksContainer.querySelectorAll('.btn-edit')
-
 
     btnsEdit.forEach((btn) => {
       btn.addEventListener('click', (e) => {
@@ -128,15 +115,15 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     });
     
-  })
-})
+  });
+});
 
 // LLENAR EL FORMULARIO ///////////////////////////////////////////
 let newData = {}
 
 taskForm.addEventListener('input', async (e) => {
   newData = { ...newData, [e.target.name]: e.target.value }
-})
+});
 
 // ENVIAR EL FORMULARIO ///////////////////////////////////////////
 taskForm.addEventListener('submit', async (e) => {
@@ -186,56 +173,38 @@ taskForm.addEventListener('submit', async (e) => {
 });
 
 
-  /* ///ESCUCHADORES DE EVENTOS/////////////////////////////// */
-  const botonAgregarNuevo = document.getElementById('btn-agregar-nuevo')
-  const botonSalirModal = document.getElementById('btn-task-exit')
+/* ///ESCUCHADORES DE EVENTOS/////////////////////////////// */
+const botonAgregarNuevo = document.getElementById('btn-agregar-nuevo');
+const botonSalirModal = document.getElementById('btn-task-exit');
 
-  botonAgregarNuevo.addEventListener('click', abrirModal)
-  botonSalirModal.addEventListener('click', cerrarModal)
+botonAgregarNuevo.addEventListener('click', abrirModal);
+botonSalirModal.addEventListener('click', cerrarModal);
 
+const searchInput = document.getElementById('search-input');
 
-  const searchInput = document.getElementById('search-input');
+let searchTimeoutId = null;
 
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeoutId);
 
-  searchInput.addEventListener('input', () => {
+  searchTimeoutId = setTimeout(() => {
     const query = searchInput.value.toLowerCase();
-
-    
     const rows = tasksContainer.querySelectorAll('tr');
 
     rows.forEach(row => {
-      const platos = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
-      const bebidas = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
-      const mesa = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
-      const ganancias = row.querySelector('td:nth-child(4)').innerText.toLowerCase();
-      const fecha = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
-
-      const matches = [platos, bebidas, mesa, ganancias, fecha].filter(column => column.includes(query));
-
-      if (matches.length > 0) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
-      }
+      const text = row.innerText.toLowerCase();
+      const shouldHide = !text.includes(query);
+      row.classList.toggle('hidden', shouldHide);
     });
-  });
+  }, 300); // Espera 300 milisegundos después de la última entrada del usuario antes de realizar la búsqueda
+});
 
+// Inicialmente oculta las filas que no coinciden con la búsqueda
+const query = searchInput.value.toLowerCase();
+const rows = tasksContainer.querySelectorAll('tr');
 
-  const query = searchInput.value.toLowerCase();
-
-  const rows = tasksContainer.querySelectorAll('tr');
-
-  rows.forEach(row => {
-    const text = row.innerText.toLowerCase();
-    const shouldHide = !text.includes(query);
-    row.style.display = shouldHide ? 'none' : 'table-row';
-  });
-
-
-
-
-
-
-
-
-
+rows.forEach(row => {
+  const text = row.innerText.toLowerCase();
+  const shouldHide = !text.includes(query);
+  row.classList.toggle('hidden', shouldHide);
+});

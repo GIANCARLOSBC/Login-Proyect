@@ -22,9 +22,10 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Agrega este enlace en tu archivo HTML -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="css/openmodal.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body id="page-top">
@@ -72,8 +73,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">PANTALLAS:</h6>
-                        <a class="collapse-item" href="#openModal">Gasto Semanal</a>
-                        <a class="collapse-item" href="#openModal">Gasto Mensual</a>
+                        <a class="collapse-item" href="mensual.html">Gasto Mensual</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">OTRAS PÁGINAS:</h6>
 
@@ -83,35 +83,6 @@
             </li>
 
             
-            <!-- MODAL GASTO SEMANAL -->
-
-
-            <div id="openModal" class="modalDialog">
-                <div class="card-body">
-                    <a href="#close" title="Close" class="close">X</a>
-                    <h1 class="h4">Registro ganacias Semanales</h1>
-                    <form id="">
-                        <label for="lunes"><b>Lunes </b></label>
-                        <input name="lunes" type="text" id="" class="form-control mb-3"/>
-              
-                        <label for="martes"><b>Martes </b></label>
-                        <input name="martes" type="number" id="task-apellidop" class="form-control mb-3" />
-              
-                        <label for="miercoles"><b>Miercoles</b></label>
-                        <input name="miercoles" type="number" id="" class="form-control mb-3"/>
-              
-                        <label for="jueves"><b>Jueves </b></label>
-                        <input name="jueves" type="number" id="" class="form-control mb-3" />
-                          
-                        <label for="viernes"><b>Viernes</b></label>
-                        <input name="viernes" type="number" id="" class="form-control mb-3"/>
-
-
-                        <button class="btn btn-success " id="">Guardar</button>
-                        <button  class="btn btn-danger" id="">Salir</button>
-                      </form>
-                </div>
-            </div>
             
 
             <!-- Nav Item - Charts -->
@@ -231,18 +202,18 @@
 
                         
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <a href="" style=" text-decoration: none; ">
+                            <a href="mensual.html" style=" text-decoration: none; ">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="font-weight-bold text-primary text-uppercase mb-1">
                                                 Ganancias (mensual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            <div id="total-ganancias" style="font-size: 1.35rem; font-weight: 700!important;"></div>
                                 
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -324,73 +295,25 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Resumen de ganancias</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+                                    <h6 class="m-0 font-weight-bold text-primary">Resumen de ganancias mensuales</h6>
+                                    
+                                   
+                                    
                                 </div>
+
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="chart"></canvas>
+                                        <canvas id="chartCanvas"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        
+
+
+                        
 
                     <!-- Content Row -->
                     <div class="row">
@@ -462,6 +385,90 @@
     <script src="js/html2canvas.js"></script>
     <script src="js/firebase.js"  type="module" defer></script>
     <script src="js productos/firebase.js" type="module" defer></script>
+    <script src="js mensual/firebase.js" type="module" defer></script>
+   
+   <script type="module" defer>
+        // Importar la función onGetTasks desde firebase.js
+    import { onGetTasks } from './js mensual/firebase.js';
+
+    const chartCanvas = document.getElementById('chartCanvas');
+    let chart = null;
+
+    function actualizarGrafico(data, labels) {
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = data;
+    chart.update();
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+    // Llamar a la función onGetTasks para obtener las tareas
+    onGetTasks((querySnapshot) => {
+        const data = [];
+        const labels = [];
+
+        querySnapshot.forEach((doc) => {
+        const tarea = doc.data();
+
+        data.push(tarea.ganancias);
+        labels.push(tarea.mes);
+        });
+
+        if (chart) {
+        chart.destroy();
+        }
+
+        const chartData = {
+        labels: labels,
+        datasets: [
+            {
+            label: 'Ganancias',
+            data: data,
+            backgroundColor: [
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 206, 86, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(75, 192, 192, 1)',
+            ],
+            borderWidth: 1,
+            },
+        ],
+        };
+
+        const chartOptions = {
+        responsive: true,
+        scales: {
+            y: {
+            beginAtZero: true,
+            },
+        },
+        };
+
+        const chartContext = chartCanvas.getContext('2d');
+        chart = new Chart(chartContext, {
+        type: 'bar',
+        data: chartData,
+        options: chartOptions,
+        });
+
+        actualizarGrafico(data, labels);
+    });
+
+  // Resto del código...
+
+});
+
+  </script>
+
+
+    
+    
+
+    
+
 
 
 
@@ -489,6 +496,7 @@
 
 
 
-    
+        
+    </body>
 
 </html>

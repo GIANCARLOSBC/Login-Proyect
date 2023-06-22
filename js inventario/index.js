@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (confirmDelete) {
           try {
             const dataset = target.dataset;
-            if (dataset && dataset.id) {
+            if (dataset && dataset.hasOwnProperty('id') && dataset.id !== "") {
               await eliminarTarea(dataset.id);
               setTimeout(() => {
                 Toastify({
@@ -72,10 +72,10 @@ window.addEventListener('DOMContentLoaded', async () => {
                 }).showToast();
               }, 2000); // delay of 2 seconds
             } else {
-              throw new Error('El objeto dataset o dataset.id es indefinido.');
+              throw new Error('El objeto dataset o dataset.id es indefinido o está vacío.');
             }
           } catch (error) {
-            throw new Error(error);
+            console.error(error); // Manejar el error adecuadamente, por ejemplo, mostrar un mensaje de error al usuario
           }
         }
       })

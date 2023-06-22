@@ -1,5 +1,6 @@
 import { onGetTasks, guardarTarea, eliminarTarea, traerTarea, actualizarTarea } from './firebase.js'
 import { abrirModal, cerrarModal } from './modal/modal.js'
+
 const taskForm = document.getElementById('task-form')
 const tasksContainer = document.getElementById('tasks-container')
 
@@ -8,43 +9,32 @@ let id = ''
 
 window.addEventListener('DOMContentLoaded', async () => {
   // CUANDO SE TRAEN LAS TAREAS
-  
-  onGetTasks((querySnapshot) => { // querySnapshot contiene todas las tareasguardadas
+  onGetTasks((querySnapshot) => {
     tasksContainer.innerHTML = ''
-
     let total = 0
 
     querySnapshot.forEach((doc) => {
       const tarea = doc.data()
-      
 
-      tasksContainer.innerHTML += `
-        <tr>
-          <td>${tarea.nombre}</td>
-          <td>${tarea.apellidop}</td>
-          <td>${tarea.apellidom}</td>
-          <td>${tarea.telefono}</td>
-          <td>${tarea.email}</td>
-          <td>${tarea.run}</td>
-          <td>${tarea.salario}</td>
-          <td>
-            <button class=' btn btn-warning btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
-            <button class=' btn btn-danger btn-delete' data-id="${doc.id}"><i class="fa-solid fa-trash"></i></button>
-            
-
-
-    
-          </td>
-        </tr>`
-
-        total++;
+      const taskRow = document.createElement('tr');
+      taskRow.innerHTML = `
+        <td>${tarea.nombre}</td>
+        <td>${tarea.apellidop}</td>
+        <td>${tarea.apellidom}</td>
+        <td>${tarea.telefono}</td>
+        <td>${tarea.email}</td>
+        <td>${tarea.run}</td>
+        <td>${tarea.salario}</td>
+        <td>
+          <button class='btn btn-warning btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
+          <button class='btn btn-danger btn-delete' data-id="${doc.id}"><i class="fa-solid fa-trash"></i></button>
+        </td>`;
         
-        
-        
+      total++;
+      tasksContainer.appendChild(taskRow);
     })
 
     document.getElementById('totalTasks').innerText = total.toString()
-    
 
     // CLICK EN ELIMINAR TAREA
     const btnsDelete = tasksContainer.querySelectorAll('.btn-delete');
@@ -55,7 +45,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (confirmDelete) {
           try {
             const dataset = target.dataset;
-            if (dataset && dataset.id) {
+            if (dataset && dataset.hasOwnProperty('id') && dataset.id !== "") {
               await eliminarTarea(dataset.id);
               setTimeout(() => {
                 Toastify({
@@ -72,24 +62,24 @@ window.addEventListener('DOMContentLoaded', async () => {
                 }).showToast();
               }, 2000); // delay of 2 seconds
             } else {
-              throw new Error('El objeto dataset o dataset.id es indefinido.');
+              throw new Error('El objeto dataset o dataset.id es indefinido o está vacío.');
             }
           } catch (error) {
-            throw new Error(error);
+            console.error(error); // Manejar el error adecuadamente, por ejemplo, mostrar un mensaje de error al usuario
           }
         }
       })
     );
 
-    // CLICK EN EDITAR TAREA
-    const btnsEdit = tasksContainer.querySelectorAll('.btn-edit')
+ // CLICK EN EDITAR TAREA
+      const btnsEdit = tasksContainer.querySelectorAll('.btn-edit');
 
-    btnsEdit.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        const taskId = e.target.dataset.id;
-        if (taskId) {
-          traerTarea(taskId)
-            .then((doc) => {
+      btnsEdit.forEach((btn) => {
+        btn.addEventListener('click', async (e) => {
+          const taskId = e.target.dataset.id;
+          if (taskId) {
+            try {
+              const doc = await traerTarea(taskId);
               const task = doc.data();
               for (const key in task) {
                 if (Object.hasOwnProperty.call(task, key)) {
@@ -100,30 +90,35 @@ window.addEventListener('DOMContentLoaded', async () => {
               id = doc.id;
               taskForm['btn-task-form'].innerText = 'Actualizar';
               abrirModal();
-            })
-            .catch((error) => {
+            } catch (error) {
               console.error(error);
-            });
-        }
+            }
+          }
+        });
       });
-    });
-  })
-  })
 
-  // LLENAR EL FORMULARIO ///////////////////////////////////////////
-  let newData = {}
 
-  taskForm.addEventListener('input', async (e) => {
-    newData = { ...newData, [e.target.name]: e.target.value }
+
+
   })
+})
 
-  // ENVIAR EL FORMULARIO ///////////////////////////////////////////
-  taskForm.addEventListener('submit', async (e) => {
-    e.preventDefault()
+// LLENAR EL FORMULARIO ///////////////////////////////////////////
+let newData = {}
+
+taskForm.addEventListener('input', (e) => {
+  newData = { ...newData, [e.target.name]: e.target.value }
+})
+
+// ENVIAR EL FORMULARIO ///////////////////////////////////////////
+taskForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
 
   try {
     if (!editStatus) {
-      Object.keys(newData).length > 0 && (await guardarTarea(newData))
+      if (Object.keys(newData).length > 0) {
+        await guardarTarea(newData);
+      }
       Toastify({
         text: 'Datos Guardados',
         duration: 3000,
@@ -137,7 +132,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         className: 'toastify-success'
       }).showToast();
     } else {
-      await actualizarTarea(id, newData)
+      await actualizarTarea(id, newData);
       Toastify({
         text: 'Tarea actualizada correctamente',
         duration: 3000,
@@ -154,7 +149,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       editStatus = false
       id = ''
       taskForm['btn-task-form'].innerText = 'Guardar'
-      
     }
 
     newData = {}
@@ -163,7 +157,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     throw new Error(error)
   }
-  })
+})
 
   /* ///ESCUCHADORES DE EVENTOS/////////////////////////////// */
   const botonAgregarNuevo = document.getElementById('btn-agregar-nuevo')

@@ -81,7 +81,7 @@
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-user"></i>
                     <span>Personal | Empleados</span></a>
             </li>
 
@@ -188,7 +188,13 @@
 
                     </div>
 
-            
+                    <select id="selectTareas" class="form-control mb-3" name="selectTareas"></select>
+
+                    <style>
+                        #selectTareas {
+                            display: none;
+                            }
+                    </style>
                     
                     
                 
@@ -224,7 +230,7 @@
                                           <th>Email</th>
                                           <th>Run</th>
                                           <th>Salario</th>
-                                          <th>Opciones</th>
+                                          <th>Acción</th>
                                         </tr>
                                       </thead>
                               
@@ -250,7 +256,7 @@
                         <form id="task-form">
                           <label for="nombre"><b>Nombre: </b></label>
                           <input name="nombre" type="text" id="task-nombre" class="form-control mb-3"
-                            placeholder="Nombre"  maxlength="13"/>
+                            placeholder="Nombre"  maxlength="13" required/>
                 
                           <label for="apellidop"><b>Apellido Paterno: </b></label>
                           <input name="apellidop" type="text" id="task-apellidop" class="form-control mb-3" 
@@ -268,6 +274,7 @@
                           
                           <label for="email"><b>Email </b></label>
 
+
                           <input name="email" id="task-email" class="form-control mb-3"
                                 placeholder="Email" maxlength="35"/>
                 
@@ -281,7 +288,7 @@
 
                 
                           <button class="btn btn-success " id="btn-task-form">Guardar</button>
-                          <button  class="btn btn-danger" id="btn-task-exit">Salir</button>
+                          <button id="btn-task-exit" class="btn btn-danger" data-dismiss="modal">Salir</button>
                         </form>
                       </div>
                   </dialog>

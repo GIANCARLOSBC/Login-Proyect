@@ -77,7 +77,7 @@
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="Productos.html">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fas fa-clipboard-list"></i>
                     <span>Materiales</span></a>
             </li>
 
@@ -223,7 +223,7 @@
                                           <th>Precio de Compra</th>
                                           <th>Precio de Venta</th>
                                           <th>Fecha</th>
-                                          <th>Opciones</th>
+                                          <th>Acción</th>
                                         </tr>
                                       </thead>
                               
@@ -400,44 +400,7 @@
     </script>
 
 
-    <script>
-        
-        function printTable() {
-            // Eliminar la columna "Opciones" del encabezado de la tabla
-            var table = document.getElementById("example");
-            var optionsHeader = table.rows[0].cells[table.rows[0].cells.length - 1];
-            optionsHeader.parentNode.removeChild(optionsHeader);
-
-            // Eliminar la columna "Opciones" de cada fila del cuerpo de la tabla
-            var rows = table.rows;
-            for (var i = 0; i < rows.length; i++) {
-                var optionsCell = rows[i].cells[rows[i].cells.length - 1];
-                optionsCell.parentNode.removeChild(optionsCell);
-            }
-
-            // Imprimir la tabla
-            var printContents = document.getElementById("example").outerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-            window.print();
-
-            document.body.innerHTML = originalContents;
-
-            // Restaurar la tabla original
-            var headerRow = table.rows[0];
-            var optionsHeader = document.createElement("th");
-            optionsHeader.innerHTML = "Opciones";
-            headerRow.appendChild(optionsHeader);
-            
-            for (var i = 0; i < rows.length; i++) {
-                var lastCell = rows[i].insertCell(-1);
-                lastCell.innerHTML = "Opciones";
-            }
-        }
-
-
-    </script>
+   
 
 
     <script>
@@ -461,6 +424,45 @@
         }
         }, 1000);
     </script>
+
+<script>
+        
+    function printTable() {
+        // Eliminar la columna "Opciones" del encabezado de la tabla
+        var table = document.getElementById("example");
+        var optionsHeader = table.rows[0].cells[table.rows[0].cells.length - 1];
+        optionsHeader.parentNode.removeChild(optionsHeader);
+
+        // Eliminar la columna "Opciones" de cada fila del cuerpo de la tabla
+        var rows = table.rows;
+        for (var i = 0; i < rows.length; i++) {
+            var optionsCell = rows[i].cells[rows[i].cells.length - 1];
+            optionsCell.parentNode.removeChild(optionsCell);
+        }
+
+        // Imprimir la tabla
+        var printContents = document.getElementById("example").outerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+        // Restaurar la tabla original
+        var headerRow = table.rows[0];
+        var optionsHeader = document.createElement("th");
+        optionsHeader.innerHTML = "Opciones";
+        headerRow.appendChild(optionsHeader);
+        
+        for (var i = 0; i < rows.length; i++) {
+            var lastCell = rows[i].insertCell(-1);
+            lastCell.innerHTML = "Opciones";
+        }
+    }
+
+
+</script>
     
 
 

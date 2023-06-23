@@ -1,50 +1,47 @@
-import { onGetTasks, guardarTarea, eliminarTarea, traerTarea, actualizarTarea } from './firebase.js';
+import { onGetAsistencias, guardarAsistencia, eliminarAsistencia, traerAsistencia, actualizarAsistencia } from './firebase.js';
 import { abrirModal, cerrarModal } from './modal/modal.js';
 
-const taskForm = document.getElementById('task-form');
-const tasksContainer = document.getElementById('tasks-container');
+const taskForm = document.getElementById('task-form3');
+const tasksContainer = document.getElementById('tasks-container3');
 
 let editStatus = false;
 let id = '';
 
 window.addEventListener('DOMContentLoaded', async () => {
-  onGetTasks((querySnapshot) => {
+  onGetAsistencias((querySnapshot) => {
     tasksContainer.innerHTML = '';
-    let total = 0;
 
     querySnapshot.forEach(async (doc) => {
-      const tarea = doc.data();
+      const asistencia = doc.data();
 
       const taskRow = document.createElement('tr');
       taskRow.innerHTML = `
-        <td>${tarea.nombre}</td>
-        <td>${tarea.apellidop}</td>
-        <td>${tarea.apellidom}</td>
-        <td>${tarea.telefono}</td>
-        <td>${tarea.email}</td>
-        <td>${tarea.run}</td>
-        <td>$${tarea.salario}</td>
+        <td>${asistencia.fecha}</td>
+        <td>${asistencia.idempleado}</td>
+        <td>${asistencia.nombre}</td>
+        <td>${asistencia.entrada}</td>
+        <td>${asistencia.salida}</td>
+       
         <td>
           <button class='btn btn-warning btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
           <button class='btn btn-danger btn-delete' data-id="${doc.id}"><i class="fa-solid fa-trash"></i></button>
         </td>`;
 
-      total++;
+      
       tasksContainer.appendChild(taskRow);
     });
 
-    document.getElementById('totalTasks').innerText = total.toString();
+   
 
-    const btnsDelete = Array.from(tasksContainer.querySelectorAll('.btn-delete'));
-    for (const btn of btnsDelete) {
+    const btnsDelete = tasksContainer.querySelectorAll('.btn-delete');
+    btnsDelete.forEach((btn) => {
       btn.addEventListener('click', async ({ target }) => {
         const confirmDelete = confirm('¿Estás seguro de que deseas eliminar estos datos?');
         if (confirmDelete) {
           try {
             const dataset = target.dataset;
-            const taskId = dataset.id;
-            if (taskId) {
-              await eliminarTarea(taskId);
+            if (dataset && dataset.hasOwnProperty('id') && dataset.id !== "") {
+              await eliminarAsistencia(dataset.id);
               setTimeout(() => {
                 Toastify({
                   text: 'Borrado exitosamente',
@@ -60,7 +57,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                 }).showToast();
               }, 2000);
             } else {
-              throw new Error('El atributo data-id es indefinido o está vacío.');
+              throw new Error('El objeto dataset o dataset.id es indefinido o está vacío.');
             }
           } catch (error) {
             console.error(error);
@@ -68,7 +65,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           }
         }
       });
-    }
+    });
 
     const btnsEdit = tasksContainer.querySelectorAll('.btn-edit');
     btnsEdit.forEach((btn) => {
@@ -76,11 +73,11 @@ window.addEventListener('DOMContentLoaded', async () => {
         const taskId = e.target.dataset.id;
         if (taskId) {
           try {
-            const doc = await traerTarea(taskId);
-            const task = doc.data();
-            for (const key in task) {
-              if (Object.hasOwnProperty.call(task, key)) {
-                taskForm[`task-${key}`].value = task[key];
+            const doc = await traerAsistencia(taskId);
+            const asistencia = doc.data();
+            for (const key in asistencia) {
+              if (Object.hasOwnProperty.call(asistencia, key)) {
+                taskForm[`task-${key}`].value = asistencia[key];
               }
             }
             editStatus = true;
@@ -108,7 +105,11 @@ taskForm.addEventListener('submit', async (e) => {
   try {
     if (!editStatus) {
       if (Object.keys(newData).length > 0) {
-        await guardarTarea(newData);
+        // Generar un ID aleatorio
+        const randomId = Math.random().toString(36).substr(2, 9);
+        newData.idempleado = randomId;
+
+        await guardarAsistencia(newData);
       }
       Toastify({
         text: 'Datos Guardados',
@@ -123,7 +124,7 @@ taskForm.addEventListener('submit', async (e) => {
         className: 'toastify-success'
       }).showToast();
     } else {
-      await actualizarTarea(id, newData);
+      await actualizarAsistencia(id, newData);
       Toastify({
         text: 'Tarea actualizada correctamente',
         duration: 3000,
@@ -157,6 +158,7 @@ const botonSalirModal = document.getElementById('btn-task-exit');
 botonAgregarNuevo.addEventListener('click', abrirModal);
 botonSalirModal.addEventListener('click', cerrarModal);
 
+
 const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', () => {
@@ -180,4 +182,3 @@ searchInput.addEventListener('input', () => {
     }
   });
 });
-

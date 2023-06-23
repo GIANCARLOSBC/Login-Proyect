@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       tasksContainer.innerHTML += `
         <tr>
           <td>${tarea.mes}</td>
-          <td>${tarea.ganancias}</td>
+          <td>$${tarea.ganancias}</td>
           <td>${tarea.hora}</td>
           <td>
             <button class='btn btn-warning btn-edit' data-id="${doc.id}"><i class="fa-solid fa-paintbrush"></i></button>
@@ -119,7 +119,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Llamar a la función para actualizar el gráfico
     actualizarGrafico(data, labels);
 
-    // CLICK EN ELIMINAR TAREA
     // CLICK EN ELIMINAR TAREA
     const btnsDelete = tasksContainer.querySelectorAll('.btn-delete');
 
@@ -196,7 +195,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Mostrar el total en el div
     const totalGananciasDiv = document.getElementById('total-ganancias');
-    totalGananciasDiv.innerText = `Total de ganancias: ${totalGanancias}`;
+    totalGananciasDiv.innerText = `Total de ganancias: $${totalGanancias}`;
   });
 
   // CUANDO SE ENVÍA EL FORMULARIO DE TAREA
@@ -280,4 +279,3 @@ searchInput.addEventListener('input', () => {
     }
   });
 });
-

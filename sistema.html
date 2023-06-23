@@ -95,14 +95,20 @@
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-user fa-table"></i>
                     <span>Personal | Empleados</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="Productos.html">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fas fa-clipboard-list "></i>
                     <span>Materiales</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="asistencia.html">
+                    <i class="fas fa-list"></i>
+                    <span>Asistencia Personal</span></a>
             </li>
 
             <!-- Divider -->
@@ -223,17 +229,17 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <a href="" style=" text-decoration: none; ">
+                            <a href="asistencia.html" style=" text-decoration: none; ">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="font-weight-bold text-success text-uppercase mb-1">
-                                                Ganancias (Semanal)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" >$120000</div>
+                                                Asistencia Personal</div>
+                                            
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i class="fas fa-sign fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -276,7 +282,7 @@
                                                 <div id="totalTasks"style="font-size: 1.35rem; font-weight: 700!important; color: #f6c23e!important;"></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -294,8 +300,8 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Resumen de ganancias mensuales</h6>
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="color: #fff; background: #2B3740;">
+                                    <h6 class="m-0 font-weight-bold">Resumen de ganancias mensuales</h6>
                                     
                                    
                                     
@@ -310,6 +316,15 @@
                             </div>
                         </div>
 
+                        <select id="selectTareas" class="form-control mb-3" name="selectTareas"></select>
+
+                    <style>
+                        #selectTareas {
+                            display: none;
+                            }
+                    </style>
+                        
+                        
                         
 
 
@@ -386,80 +401,80 @@
     <script src="js/firebase.js"  type="module" defer></script>
     <script src="js productos/firebase.js" type="module" defer></script>
     <script src="js mensual/firebase.js" type="module" defer></script>
+    
    
    <script type="module" defer>
-        // Importar la función onGetTasks desde firebase.js
-    import { onGetTasks } from './js mensual/firebase.js';
+    // Importar la función onGetTasks desde firebase.js
 
-    const chartCanvas = document.getElementById('chartCanvas');
-    let chart = null;
+        import { onGetTasks } from './js mensual/firebase.js';
 
-    function actualizarGrafico(data, labels) {
-    chart.data.labels = labels;
-    chart.data.datasets[0].data = data;
-    chart.update();
-    }
+        const chartCanvas = document.getElementById('chartCanvas');
+        let chart = null;
 
-    window.addEventListener('DOMContentLoaded', async () => {
-    // Llamar a la función onGetTasks para obtener las tareas
-    onGetTasks((querySnapshot) => {
-        const data = [];
-        const labels = [];
-
-        querySnapshot.forEach((doc) => {
-        const tarea = doc.data();
-
-        data.push(tarea.ganancias);
-        labels.push(tarea.mes);
-        });
-
-        if (chart) {
-        chart.destroy();
+        function actualizarGrafico(data, labels) {
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = data;
+        chart.update();
         }
 
-        const chartData = {
-        labels: labels,
-        datasets: [
-            {
-            label: 'Ganancias',
-            data: data,
-            backgroundColor: [
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255, 206, 86, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(75, 192, 192, 1)',
-            ],
-            borderWidth: 1,
-            },
-        ],
-        };
+        window.addEventListener('DOMContentLoaded', async () => {
+        // Llamar a la función onGetTasks para obtener las tareas
+        onGetTasks((querySnapshot) => {
+            const data = [];
+            const labels = [];
 
-        const chartOptions = {
-        responsive: true,
-        scales: {
-            y: {
-            beginAtZero: true,
-            },
-        },
-        };
+            querySnapshot.forEach((doc) => {
+            const tarea = doc.data();
 
-        const chartContext = chartCanvas.getContext('2d');
-        chart = new Chart(chartContext, {
-        type: 'bar',
-        data: chartData,
-        options: chartOptions,
+            data.push(tarea.ganancias);
+            labels.push(tarea.mes);
+            });
+
+            if (chart) {
+            chart.destroy();
+            }
+
+            const chartData = {
+            labels: labels,
+            datasets: [
+                {
+                label: 'Ganancias',
+                data: data,
+                backgroundColor: 'rgba(0, 166, 255, 0.2)', // Color azul claro para el fondo
+                borderColor: 'rgba(0, 166, 255, 1)', // Color azul para la línea
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(0, 166, 255, 1)', // Color azul para los puntos
+                pointRadius: 4, // Tamaño de los puntos
+                },
+            ],
+            };
+
+            const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false, // Permite que el gráfico se adapte al contenedor
+            scales: {
+                y: {
+                beginAtZero: true,
+                },
+            },
+            };
+
+            const chartContext = chartCanvas.getContext('2d');
+            chart = new Chart(chartContext, {
+            type: 'line',
+            data: chartData,
+            options: chartOptions,
+            });
+
+            actualizarGrafico(data, labels);
         });
 
-        actualizarGrafico(data, labels);
-    });
+        // Resto del código...
+        });
 
-  // Resto del código...
+      
 
-});
+
 
   </script>
 

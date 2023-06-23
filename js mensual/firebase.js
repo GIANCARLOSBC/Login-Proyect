@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const divTotalGanancias = document.getElementById('total-ganancias');
 
   const total = await getTotalGanancias();
-  divTotalGanancias.innerText = `${total}`;
+  divTotalGanancias.innerText = `$${total}`;
 });
 
 
